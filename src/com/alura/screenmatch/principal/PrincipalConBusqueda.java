@@ -7,6 +7,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -49,7 +50,11 @@ public class PrincipalConBusqueda {
 // este try catch es para la esception del objeto titulo.
             // try {
             Titulo miTitulo = new Titulo(miTituloOmdb);
-            System.out.println("Titulo ya comvertido" + miTitulo);
+            System.out.println("Titulo ya convertido" + miTitulo);
+// se crea un archivo de texto con el nombre de la pelicula
+            FileWriter escritura = new FileWriter("peliculas.txt");
+            escritura.write(miTitulo.toString());
+            escritura.close();
         } catch (NumberFormatException e) {
             System.out.println("No se pudo crear el objeto ocurrio un error");
             System.out.println(e.getMessage());
