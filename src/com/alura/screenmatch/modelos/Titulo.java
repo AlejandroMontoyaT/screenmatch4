@@ -18,6 +18,12 @@ public class Titulo implements Comparable<Titulo>{
         this.nombre = nombre;
         this.fechaDeLanzamiento = fechaDeLanzamiento;
     }
+//esta estructura de codigo viene de principal para la configuracion del json
+public Titulo(TituloOmdb miTituloOmdb) {
+    this.nombre = miTituloOmdb.title();
+    this.fechaDeLanzamiento = Integer.valueOf(miTituloOmdb.year());
+    this.duracionEnMinutos = Integer.valueOf(miTituloOmdb.runtime().substring(0,2));
+}
 
     public String getNombre() {
         return nombre;
@@ -71,15 +77,14 @@ public class Titulo implements Comparable<Titulo>{
 
     @Override
     public int compareTo(Titulo otroTitulo) {
-
         return this.getNombre().compareTo(otroTitulo.getNombre());
     }
 //esta liea es para que se muestre el nombre y la fecha de lanzamiento del json
-    @Override
-    public String toString() {
-       return "nombre='" + nombre + '\'' +
-                ", fechaDeLanzamiento=" + fechaDeLanzamiento ;
-    }
+@Override
+public String toString() {
+    return "nombre='" + nombre + '\'' +
+            ", fechaDeLanzamiento=" + fechaDeLanzamiento+
+            ", duracion="+duracionEnMinutos;
 }
-
+}
 
