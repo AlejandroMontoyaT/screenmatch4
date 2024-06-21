@@ -39,10 +39,17 @@ public class PrincipalConBusqueda {
         TituloOmdb miTituloOmdb = gson.fromJson(json, TituloOmdb.class);
         System.out.println(miTituloOmdb);
         //se crea de titulo omdb a titulo
-        Titulo miTitulo = new Titulo(miTituloOmdb);
-        System.out.println(miTitulo);
-
-        System.out.println(miTitulo);
+       // Titulo miTitulo = new Titulo(miTituloOmdb); esta linea se comenta por la parte de que se crea un nuevo objeto para un try catch
+       // System.out.println(miTitulo);
+// este try catch es para la esception del objeto titulo.
+        try {
+            Titulo miTitulo = new Titulo(miTituloOmdb);
+            System.out.println(miTitulo);
+        } catch (NumberFormatException e) {
+            System.out.println("No se pudo crear el objeto ocurrio un error");
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Fin del programa");
     }
 }
 
