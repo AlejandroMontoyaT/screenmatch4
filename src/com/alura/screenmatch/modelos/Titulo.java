@@ -1,37 +1,31 @@
 package com.alura.screenmatch.modelos;
 
 import com.alura.screenmatch.excepcion.ErrorEnConversionDeDuracionException;
-import com.google.gson.annotations.SerializedName;
 
 public class Titulo implements Comparable<Titulo>{
-    //se ocupan anotaciones para que funcione el json para que sepa que se refiere a un atributo
-    @SerializedName("Title")
     private String nombre;
-    @SerializedName("Year")
     private int fechaDeLanzamiento;
     private boolean incluidoEnElPlan;
     private double sumaDeLasEvaluaciones;
     private int totalDeEvaluaciones;
-  //  @SerializedName("Runtime")
     private int duracionEnMinutos;
 
     public Titulo(String nombre, int fechaDeLanzamiento) {
         this.nombre = nombre;
         this.fechaDeLanzamiento = fechaDeLanzamiento;
     }
-//esta estructura de codigo viene de principal para la configuracion del json
-public Titulo(TituloOmdb miTituloOmdb) {
-    this.nombre = miTituloOmdb.title();
-    this.fechaDeLanzamiento = Integer.valueOf(miTituloOmdb.year());
-        if (miTituloOmdb.runtime().contains("N/A")) {
-        //se crea exception personalizado en este caso es ErrorEnConversionDeDuracionException
-        throw new ErrorEnConversionDeDuracionException("No puede convertir la duracion de pelicula por que tiene un N/A");
+
+    public Titulo(TituloOmdb miTituloOmdb) {
+        this.nombre = miTituloOmdb.title();
+        this.fechaDeLanzamiento = Integer.valueOf(miTituloOmdb.year());
+        if (miTituloOmdb.runtime().contains("N/A")){
+            throw new ErrorEnConversionDeDuracionException("No pude convertir la duracion," +
+                    "porque contiene un N/A");
+        }
+        this.duracionEnMinutos = Integer.valueOf(
+                miTituloOmdb.runtime().substring(0,3).replace(" ","")
+        );
     }
-    this.duracionEnMinutos = Integer.valueOf(
-            //                                    se crea para que muestre la duracion de la pelicula con sifras de 2 digitos
-            miTituloOmdb.runtime().substring(0,3).replace(" ",""  )
-    );
-}
 
     public String getNombre() {
         return nombre;
@@ -87,12 +81,11 @@ public Titulo(TituloOmdb miTituloOmdb) {
     public int compareTo(Titulo otroTitulo) {
         return this.getNombre().compareTo(otroTitulo.getNombre());
     }
-//esta liea es para que se muestre el nombre y la fecha de lanzamiento del json
-@Override
-public String toString() {
-    return "nombre='" + nombre + '\'' +
-            ", fechaDeLanzamiento=" + fechaDeLanzamiento+
-            ", duracion="+duracionEnMinutos;
-}
-}
 
+    @Override
+    public String toString() {
+        return "(nombre=" + nombre +
+                ", fechaDeLanzamiento=" + fechaDeLanzamiento+
+                ", duracion="+duracionEnMinutos+")";
+    }
+}
